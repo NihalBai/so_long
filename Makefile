@@ -6,7 +6,7 @@
 #    By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/20 19:10:11 by nbaidaou          #+#    #+#              #
-#    Updated: 2025/02/06 16:16:22 by nbaidaou         ###   ########.fr        #
+#    Updated: 2025/02/07 16:33:14 by nbaidaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFT_DIR = libft
 GNL_DIR = get_next_line
 
 # Source files and object files
-SRC = window.c map_validation.c moves.c enemy.c helpers.c
+SRC = window.c map_validation.c moves.c enemy.c helpers.c collections.c
 OBJ = $(SRC:.c=.o)
 
 # Library files

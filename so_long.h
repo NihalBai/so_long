@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:24:33 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/07 00:39:52 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:31:55 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_player
 typedef struct s_enemy {
     int x;
     int y;
-	void	*textures_enemy[4][2]; // Player movement textures [direction][frame]
+	void	*textures_enemy[7]; 
 	int		current_frame_enemy; 
 } t_enemy;
 
@@ -65,7 +65,8 @@ typedef struct s_data
 	void *player_textures;  // Player texture
 	void *collect_textures; // Collectible texture
 	void *exit_textures;    // Exit texture
-	void *enemy_textures;
+	
+	int collectibles_left;
 	t_player player;
 	t_map map;
 	t_enemy enemy;
@@ -93,12 +94,15 @@ void	initialize_player(t_data *data, char **map);
 void draw_map(t_data *data, char **map);
 
 // enemy
-int	game_loop(t_data *data);
+void	game_loop(t_data *game);
 void	initialize_enemy(t_data *data, char **map);
 void	move_enemy(t_data *data);
-void	load_player_textures_enemy(t_data *game);
-
+void	load_enemy_textures(t_data *game);
+void	animate_enemy(t_data *game);
 // helpers
 int ft_rand(void);
 void ft_srand(unsigned int new_seed);
+
+// collections
+void check_collectibles_and_exit(t_data *game);
 #endif

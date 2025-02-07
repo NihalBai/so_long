@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:56:32 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/07 14:22:51 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:49:00 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,18 @@ void	destroy_texture_group(void *mlx, void *textures[4][2])
 		i++;
 	}
 }
+void destroy_enemy_textures(void *mlx, void *textures[7])
+{
+    int i;
+
+    i = 0;
+    while (i < 7)
+    {
+        if (textures[i])
+            mlx_destroy_image(mlx, textures[i]);
+        i++;
+    }
+}
 
 void	destroy_single_textures(t_data *data)
 {
@@ -118,24 +130,25 @@ void	destroy_single_textures(t_data *data)
 void	cleanup_textures(t_data *data)
 {
 	destroy_texture_group(data->mlx, data->player.textures);
-	destroy_texture_group(data->mlx, data->enemy.textures_enemy);
+	 destroy_enemy_textures(data->mlx, data->enemy.textures_enemy); 
 	destroy_single_textures(data);
 }
 
-void	draw_entities(t_data *data)
+void draw_entities(t_data *data)
 {
-	void	*player_tex;
-	void	*enemy_tex;
+    void *player_tex;
+    void *enemy_tex;
 
-	player_tex = data->player.textures[data->player.direction][data->player.current_frame];
-	enemy_tex = data->enemy.textures_enemy[0][0];
-	if (player_tex)
-		mlx_put_image_to_window(data->mlx, data->win, player_tex, data->player.x
-			* 32, data->player.y * 32);
-	if (enemy_tex)
-		mlx_put_image_to_window(data->mlx, data->win, enemy_tex, data->enemy.x
-			* 32, data->enemy.y * 32);
+    player_tex = data->player.textures[data->player.direction][data->player.current_frame];
+    if (player_tex)
+        mlx_put_image_to_window(data->mlx, data->win, player_tex,
+            data->player.x * 32, data->player.y * 32);
+    enemy_tex = data->enemy.textures_enemy[data->enemy.current_frame_enemy];
+    if (enemy_tex)
+        mlx_put_image_to_window(data->mlx, data->win, enemy_tex,
+            data->enemy.x * 32, data->enemy.y * 32);
 }
+
 void	draw_map(t_data *data, char **map)
 {
 	void	*current_textures;
@@ -211,45 +224,6 @@ void	free_map(char **map)
 	free(map);
 }
 
-// int	main(int ac, char **av)
-// {
-// 	t_data	data;
-// 	char	**map;
-
-// 	if (ac != 2)
-// 		return (ft_putstr_fd("Usage: ./so_long <map_file>\n", 2), 1);
-// 	// Initialize everything to NULL
-// 	ft_memset(&data, 0, sizeof(t_data));
-// 	data.mlx = mlx_init();
-// 	if (!data.mlx)
-// 		return (ft_putstr_fd("Error: Failed to initialize MiniLibX\n", 2), 1);
-// 	map = read_map(av[1]);
-// 	if (!map)
-// 		return (ft_putstr_fd("Error: Failed to read the map\n", 2), 1);
-// 	data.map_data = map;
-// 	count_map_width_height(map, &data.map);
-// 	if (!validate_map(map) || !check_map_validity(map))
-// 		return (free_map(map), 1);
-// 	data.win = mlx_new_window(data.mlx, data.map.w * 32, data.map.h * 32,
-// 			"GAME");
-// 	if (!data.win)
-// 	{
-// 		free_map(map);
-// 		return (ft_putstr_fd("Error: Failed to create window\n", 2), 1);
-// 	}
-// 	initialize_images(&data);
-// 	load_player_textures(&data);
-// 	load_player_textures_enemy(&data);
-// 	initialize_player(&data, map);
-// 	initialize_enemy(&data, map);
-// 	mlx_hook(data.win, 2, 1L << 0, handle_keypress, &data);
-// 	mlx_hook(data.win, 17, 1L << 5, close_handler, &data);
-// 	draw_map(&data, map);
-// 	mlx_loop(data.mlx);
-// 	cleanup_textures(&data);
-// 	free_map(map);
-// 	return (0);
-// }
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -282,7 +256,7 @@ int	main(int ac, char **av)
 	
 	initialize_images(&data);
 	load_player_textures(&data);
-	load_player_textures_enemy(&data);
+	load_enemy_textures(&data);
 	initialize_player(&data, map);
 	initialize_enemy(&data, map);
 	
