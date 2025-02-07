@@ -13,11 +13,11 @@
 #include	"mlx_int.h"
 
 
-char	*mlx_get_data_addr(t_img *img,int *bits_per_pixel,
+char	*mlx_get_data_addr(t_textures *textures,int *bits_per_pixel,
 			   int *size_line,int *endian)
 {
-  *bits_per_pixel = img->bpp;
-  *size_line = img->size_line;
-  *endian = img->image->byte_order;
-  return (img->data);
+  *bits_per_pixel = textures->bpp;
+  *size_line = textures->size_line;
+  *endian = textures->image->byte_order;
+  return (textures->data);
 }

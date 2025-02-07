@@ -36,124 +36,124 @@ int	shm_att_pb(Display *d,XErrorEvent *ev)
 
 void	*mlx_int_new_xshm_image(t_xvar *xvar,int width,int height,int format)
 {
-  t_img	*img;
+  t_textures	*textures;
   int	(*save_handler)();
 
-  if (!(img = malloc(sizeof(*img))))
+  if (!(textures = malloc(sizeof(*textures))))
     return ((void *)0);
-  bzero(img,sizeof(*img));
-  img->data = 0;
-  img->image = XShmCreateImage(xvar->display,xvar->visual,xvar->depth,
-			       format,img->data,&(img->shm),width,height);
-  if (!img->image)
+  bzero(textures,sizeof(*textures));
+  textures->data = 0;
+  textures->image = XShmCreateImage(xvar->display,xvar->visual,xvar->depth,
+			       format,textures->data,&(textures->shm),width,height);
+  if (!textures->image)
     {
-      free(img);
+      free(textures);
       return ((void *)0);
     }
-  img->width = width;
-  img->height = height;
-  img->size_line = img->image->bytes_per_line;
-  img->bpp = img->image->bits_per_pixel;
-  img->format = format;
-  img->shm.shmid = shmget(IPC_PRIVATE,(width+32)*height*4,IPC_CREAT|0777);
-  if (img->shm.shmid==-1)
+  textures->width = width;
+  textures->height = height;
+  textures->size_line = textures->image->bytes_per_line;
+  textures->bpp = textures->image->bits_per_pixel;
+  textures->format = format;
+  textures->shm.shmid = shmget(IPC_PRIVATE,(width+32)*height*4,IPC_CREAT|0777);
+  if (textures->shm.shmid==-1)
     {
-      XDestroyImage(img->image);
-      free(img);
+      XDestroyImage(textures->image);
+      free(textures);
       return ((void *)0);
     }
-  img->data = img->shm.shmaddr = img->image->data = shmat(img->shm.shmid,0,0);
-  if (img->data==(void *)-1)
+  textures->data = textures->shm.shmaddr = textures->image->data = shmat(textures->shm.shmid,0,0);
+  if (textures->data==(void *)-1)
     {
-      shmctl(img->shm.shmid,IPC_RMID,0);
-      XDestroyImage(img->image);
-      free(img);
+      shmctl(textures->shm.shmid,IPC_RMID,0);
+      XDestroyImage(textures->image);
+      free(textures);
       return ((void *)0);
     }
-  img->shm.readOnly = False;
+  textures->shm.readOnly = False;
   mlx_X_error = 0;
   save_handler = XSetErrorHandler(shm_att_pb);
-  if (!XShmAttach(xvar->display,&(img->shm)) ||
+  if (!XShmAttach(xvar->display,&(textures->shm)) ||
       0&XSync(xvar->display,False) || mlx_X_error)
     {
       XSetErrorHandler(save_handler);
-      shmdt(img->data);
-      shmctl(img->shm.shmid,IPC_RMID,0);
-      XDestroyImage(img->image);
-      free(img);
+      shmdt(textures->data);
+      shmctl(textures->shm.shmid,IPC_RMID,0);
+      XDestroyImage(textures->image);
+      free(textures);
       return ((void *)0);
     }
   XSetErrorHandler(save_handler);
-  shmctl(img->shm.shmid,IPC_RMID,0);
+  shmctl(textures->shm.shmid,IPC_RMID,0);
   if (xvar->pshm_format==format)
     {
-      img->pix = XShmCreatePixmap(xvar->display,xvar->root,img->shm.shmaddr,
-				  &(img->shm),width,height,xvar->depth);
-      img->type = MLX_TYPE_SHM_PIXMAP;
+      textures->pix = XShmCreatePixmap(xvar->display,xvar->root,textures->shm.shmaddr,
+				  &(textures->shm),width,height,xvar->depth);
+      textures->type = MLX_TYPE_SHM_PIXMAP;
     }
   else
     {
-      img->pix = XCreatePixmap(xvar->display,xvar->root,
+      textures->pix = XCreatePixmap(xvar->display,xvar->root,
 			       width,height,xvar->depth);
-      img->type = MLX_TYPE_SHM;
+      textures->type = MLX_TYPE_SHM;
     }
   if (xvar->do_flush)
     XFlush(xvar->display);
-  return (img);
+  return (textures);
 }
 
 
 
 void	*mlx_int_new_image(t_xvar *xvar,int width, int height,int format)
 {
-  t_img	*img;
+  t_textures	*textures;
 
-  if (!(img = malloc(sizeof(*img))))
+  if (!(textures = malloc(sizeof(*textures))))
     return ((void *)0);
-  if (!(img->data = malloc((width+32)*height*4)))
+  if (!(textures->data = malloc((width+32)*height*4)))
   {
-    free(img);
+    free(textures);
     return ((void *)0);
   }
-  bzero(img->data,(width+32)*height*4);
-  img->image = XCreateImage(xvar->display,xvar->visual,xvar->depth,format,0,
-			    img->data,width,height,32,0);
-  if (!img->image)
+  bzero(textures->data,(width+32)*height*4);
+  textures->image = XCreateImage(xvar->display,xvar->visual,xvar->depth,format,0,
+			    textures->data,width,height,32,0);
+  if (!textures->image)
     {
-      free(img->data);
-      free(img);
+      free(textures->data);
+      free(textures);
       return ((void *)0);
     }
-  img->gc = 0;
-  img->size_line = img->image->bytes_per_line;
-  img->bpp = img->image->bits_per_pixel;
-  img->width = width;
-  img->height = height;
-  img->pix = XCreatePixmap(xvar->display,xvar->root,width,height,xvar->depth);
-  img->format = format;
-  img->type = MLX_TYPE_XIMAGE;
+  textures->gc = 0;
+  textures->size_line = textures->image->bytes_per_line;
+  textures->bpp = textures->image->bits_per_pixel;
+  textures->width = width;
+  textures->height = height;
+  textures->pix = XCreatePixmap(xvar->display,xvar->root,width,height,xvar->depth);
+  textures->format = format;
+  textures->type = MLX_TYPE_XIMAGE;
   if (xvar->do_flush)
     XFlush(xvar->display);
-  return (img);
+  return (textures);
 }
 
 
 void	*mlx_new_image(t_xvar *xvar,int width, int height)
 {
-  t_img	*img;
+  t_textures	*textures;
 
   if (xvar->use_xshm)
-    if (img = mlx_int_new_xshm_image(xvar,width,height,ZPixmap))
-      return (img);
+    if (textures = mlx_int_new_xshm_image(xvar,width,height,ZPixmap))
+      return (textures);
   return (mlx_int_new_image(xvar,width,height,ZPixmap));
 }
 
 void	*mlx_new_image2(t_xvar *xvar,int width, int height)
 {
-  t_img	*img;
+  t_textures	*textures;
 
   if (xvar->use_xshm)
-    if (img = mlx_int_new_xshm_image(xvar,width,height,XYPixmap))
-      return (img);
+    if (textures = mlx_int_new_xshm_image(xvar,width,height,XYPixmap))
+      return (textures);
   return (mlx_int_new_image(xvar,width,height,XYPixmap));
 }

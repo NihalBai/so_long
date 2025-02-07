@@ -16,8 +16,8 @@ extern struct s_col_name mlx_col_name[];
 
 #define	RETURN	{ if (colors) free(colors); if (tab) free(tab); \
 		tab = (void *)0; if (colors_direct) free(colors_direct); \
-		if (img) {XDestroyImage(img->image); \
-				XFreePixmap(xvar->display,img->pix);free(img);} \
+		if (textures) {XDestroyImage(textures->image); \
+				XFreePixmap(xvar->display,textures->pix);free(textures);} \
 		return ((void *)0);}
 
 
@@ -115,14 +115,14 @@ int	mlx_int_get_text_rgb(char *name, char *end)
 }
 
 
-int	mlx_int_xpm_set_pixel(t_img *img, char *data, int opp, int col, int x)
+int	mlx_int_xpm_set_pixel(t_textures *textures, char *data, int opp, int col, int x)
 {
 	int	dec;
 	
 	dec = opp;
   	while (dec--)
     {
-    	if (img->image->byte_order)
+    	if (textures->image->byte_order)
 			*(data+x*opp+dec) = col&0xFF;
       	else
 			*(data+x*opp+opp-dec-1) = col&0xFF;
@@ -148,18 +148,18 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 		int		x;
 		int		i;
 		int		j;
-		t_img	*img;
+		t_textures	*textures;
 		t_xpm_col	*colors;
 		int		*colors_direct;
 		int		width;
 		int		height;
-		XImage	*clip_img;
+		XImage	*clip_textures;
 		XGCValues	xgcv;
 		Pixmap	clip_pix;
 
 		colors = 0;
 		colors_direct = 0;
-		img = 0;
+		textures = 0;
 		tab = 0;
 		pos = 0;
 		if (!(line = f(info,&pos,info_size)) ||
@@ -199,7 +199,7 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 				if ((rgb_col = mlx_int_get_text_rgb(tab[j], tab[j+1]))==-1)
 				{
 						if (!(clip_data = malloc(4*width*height)) ||   ok, nice size ..
-										!(clip_img = XCreateImage(xvar->display, xvar->visual,
+										!(clip_textures = XCreateImage(xvar->display, xvar->visual,
 														1, XYPixmap, 0, clip_data,
 														width, height, 8, (width+7)/8)) )
 								RETURN;
@@ -218,13 +218,13 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 				tab = (void *)0;
 		}
 
-		if (!(img = mlx_new_image(xvar,width,height)))
+		if (!(textures = mlx_new_image(xvar,width,height)))
 				RETURN;
-		opp = img->bpp/8;
+		opp = textures->bpp/8;
 
 
 		i = height;
-		data = img->data;
+		data = textures->data;
 		while (i--)
 		{
 				if (!(line = f(info,&pos,info_size)))
@@ -248,17 +248,17 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 						}
 						/*
 						if (col==-1)
-								XPutPixel(clip_img, x, height-1-i, 0);
+								XPutPixel(clip_textures, x, height-1-i, 0);
 						else
-								mlx_int_xpm_set_pixel(img, data, opp, col, x);
+								mlx_int_xpm_set_pixel(textures, data, opp, col, x);
 						x ++;
 						*/
 						if (col==-1)
 							col = 0xFF000000;
-						mlx_int_xpm_set_pixel(img, data, opp, col, x);
+						mlx_int_xpm_set_pixel(textures, data, opp, col, x);
 						++x;
 				}
-				data += img->size_line;
+				data += textures->size_line;
 		}
 		/*
 		if (clip_data)
@@ -266,24 +266,24 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 				if (!(clip_pix = XCreatePixmap(xvar->display, xvar->root,
 												width, height, 1)) )
 						RETURN;
-				img->gc = XCreateGC(xvar->display, clip_pix, 0, &xgcv);
-				XPutImage(xvar->display, clip_pix, img->gc, clip_img,
+				textures->gc = XCreateGC(xvar->display, clip_pix, 0, &xgcv);
+				XPutImage(xvar->display, clip_pix, textures->gc, clip_textures,
 								0, 0, 0, 0, width, height);
-				XFreeGC(xvar->display, img->gc);
+				XFreeGC(xvar->display, textures->gc);
 				xgcv.clip_mask = clip_pix;
 				xgcv.function = GXcopy;
 				xgcv.plane_mask = AllPlanes;
-				img->gc = XCreateGC(xvar->display, xvar->root, GCClipMask|GCFunction|
+				textures->gc = XCreateGC(xvar->display, xvar->root, GCClipMask|GCFunction|
 								GCPlaneMask, &xgcv);
 				XSync(xvar->display, False);
-				XDestroyImage(clip_img);
+				XDestroyImage(clip_textures);
 		}
 		*/
 		if (colors)
 				free(colors);
 		if (colors_direct)
 				free(colors_direct);
-		return (img);
+		return (textures);
 }
 
 
@@ -310,7 +310,7 @@ void	*mlx_xpm_file_to_image(t_xvar *xvar,char *file,int *width,int *height)
 		int	fd;
 		int	size;
 		char	*ptr;
-		t_img	*img;
+		t_textures	*textures;
 
 		fd = -1;
 		if ((fd = open(file,O_RDONLY))==-1 || (size = lseek(fd,0,SEEK_END))==-1 ||
@@ -322,24 +322,24 @@ void	*mlx_xpm_file_to_image(t_xvar *xvar,char *file,int *width,int *height)
 				return ((void *)0);
 		}
 		mlx_int_file_get_rid_comment(ptr, size);
-		if (img = mlx_int_parse_xpm(xvar,ptr,size,mlx_int_get_line))
+		if (textures = mlx_int_parse_xpm(xvar,ptr,size,mlx_int_get_line))
 		{
-				*width = img->width;
-				*height = img->height;
+				*width = textures->width;
+				*height = textures->height;
 		}
 		munmap(ptr,size);
 		close(fd);
-		return (img);
+		return (textures);
 }
 
 void	*mlx_xpm_to_image(t_xvar *xvar,char **xpm_data,int *width,int *height)
 {
-		t_img	*img;
+		t_textures	*textures;
 
-		if (img = mlx_int_parse_xpm(xvar,xpm_data,0,mlx_int_static_line))
+		if (textures = mlx_int_parse_xpm(xvar,xpm_data,0,mlx_int_static_line))
 		{
-				*width = img->width;
-				*height = img->height;
+				*width = textures->width;
+				*height = textures->height;
 		}
-		return (img);
+		return (textures);
 }

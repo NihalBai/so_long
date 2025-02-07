@@ -17,9 +17,9 @@
 void		*mlx_int_xpm_f_image(t_xvar *xvar,int *width,int *height,
 				     int (*xpm_func)(),void *param)
 {
-  XImage	*img1;
-  XImage	*img2;
-  t_img		*im2;
+  XImage	*textures1;
+  XImage	*textures2;
+  t_textures		*im2;
   XpmAttributes	xpm_att;
 
   xpm_att.visual = xvar->visual;
@@ -27,22 +27,22 @@ void		*mlx_int_xpm_f_image(t_xvar *xvar,int *width,int *height,
   xpm_att.depth = xvar->depth;
   xpm_att.bitmap_format = ZPixmap;
   xpm_att.valuemask = XpmDepth|XpmBitmapFormat|XpmVisual|XpmColormap;
-  if (xpm_func(xvar->display,param,&img1,&img2,&xpm_att))
+  if (xpm_func(xvar->display,param,&textures1,&textures2,&xpm_att))
     return ((void *)0);
-  if (img2)
-    XDestroyImage(img2);
+  if (textures2)
+    XDestroyImage(textures2);
 
-  if (!(im2 = (void *)mlx_new_image(xvar,img1->width,img1->height)))
+  if (!(im2 = (void *)mlx_new_image(xvar,textures1->width,textures1->height)))
     {
-      XDestroyImage(img1);
+      XDestroyImage(textures1);
       return ((void *)0);
     }
-  *width = img1->width;
-  *height = img1->height;
-  if (mlx_int_egal_img(im2->image,img1))
+  *width = textures1->width;
+  *height = textures1->height;
+  if (mlx_int_egal_textures(im2->image,textures1))
     {
-      bcopy(img1->data,im2->data,img1->height*img1->bytes_per_line);
-      XDestroyImage(img1);
+      bcopy(textures1->data,im2->data,textures1->height*textures1->bytes_per_line);
+      XDestroyImage(textures1);
       return (im2);
     }
   if (im2->type==MLX_TYPE_SHM_PIXMAP)
@@ -57,27 +57,27 @@ void		*mlx_int_xpm_f_image(t_xvar *xvar,int *width,int *height,
       shmdt(im2->data);
     }
   XDestroyImage(im2->image);
-  im2->image = img1;
-  im2->data = img1->data;
+  im2->image = textures1;
+  im2->data = textures1->data;
   im2->type = MLX_TYPE_XIMAGE;
-  im2->size_line = img1->bytes_per_line;
-  im2->bpp = img1->bits_per_pixel;
+  im2->size_line = textures1->bytes_per_line;
+  im2->bpp = textures1->bits_per_pixel;
   return (im2);
 }
 
 
-int	mlx_int_egal_img(XImage *img1,XImage *img2)
+int	mlx_int_egal_textures(XImage *textures1,XImage *textures2)
 {
-  if (img1->width!=img2->width || img1->height!=img2->height ||
-      img1->xoffset!=img2->xoffset || img1->format!=img2->format ||
-      img1->byte_order!=img2->byte_order ||
-      img1->bitmap_unit!=img2->bitmap_unit ||
-      img1->bitmap_bit_order!=img2->bitmap_bit_order ||
-      img1->bitmap_pad!=img2->bitmap_pad || img1->depth!=img2->depth ||
-      img1->bytes_per_line!=img2->bytes_per_line ||
-      img1->bits_per_pixel!=img2->bits_per_pixel ||
-      img1->red_mask!=img2->red_mask || img1->green_mask!=img2->green_mask ||
-      img1->blue_mask!=img2->blue_mask )
+  if (textures1->width!=textures2->width || textures1->height!=textures2->height ||
+      textures1->xoffset!=textures2->xoffset || textures1->format!=textures2->format ||
+      textures1->byte_order!=textures2->byte_order ||
+      textures1->bitmap_unit!=textures2->bitmap_unit ||
+      textures1->bitmap_bit_order!=textures2->bitmap_bit_order ||
+      textures1->bitmap_pad!=textures2->bitmap_pad || textures1->depth!=textures2->depth ||
+      textures1->bytes_per_line!=textures2->bytes_per_line ||
+      textures1->bits_per_pixel!=textures2->bits_per_pixel ||
+      textures1->red_mask!=textures2->red_mask || textures1->green_mask!=textures2->green_mask ||
+      textures1->blue_mask!=textures2->blue_mask )
     return (0);
   return (1);
 }

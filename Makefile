@@ -6,22 +6,21 @@
 #    By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/20 19:10:11 by nbaidaou          #+#    #+#              #
-#    Updated: 2025/01/27 16:37:29 by nbaidaou         ###   ########.fr        #
+#    Updated: 2025/02/06 16:16:22 by nbaidaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I. -Ilibft -Iget_next_line -Imlx  # Add include paths
-LDFLAGS = -Llibft -Lget_next_line  # Link the libft and get_next_line directories
+CFLAGS = -Wall -Wextra -Werror -I. -Ilibft -Iget_next_line -Iminilibx-linux-master
+LDFLAGS = -Llibft -Lget_next_line -Lminilibx-linux-master
 
 # Directories
-MLX_DIR = mlx
+MLX_DIR = minilibx-linux-master
 LIBFT_DIR = libft
 GNL_DIR = get_next_line
 
 # Source files and object files
-SRC = window.c
+SRC = window.c map_validation.c moves.c enemy.c helpers.c
 OBJ = $(SRC:.c=.o)
 
 # Library files
@@ -37,20 +36,23 @@ all: $(NAME)
 
 # Link object files into the final executable
 $(NAME): $(OBJ) $(LIBFT_LIB) $(GNL_LIB)
-	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) $(LIBFT_LIB) $(GNL_LIB) $(MLX_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -L$(GNL_DIR) -l:get_next_line.a -L$(MLX_DIR) $(MLX_LIB) -o $(NAME)
 
 # Compile source files into object files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean object files
+# Clean object files in the current directory, libft, and get_next_line
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ)  # Delete object files in the current directory
+	$(MAKE) -C $(LIBFT_DIR) clean  # Clean object files in libft
+	$(MAKE) -C $(GNL_DIR) clean  # Clean object files in get_next_line
 
-# Clean everything (including libraries)
+# Clean everything (including libraries and binaries)
 fclean: clean
-	rm -f $(NAME)
-	rm -f $(LIBFT_LIB) $(GNL_LIB)
+	rm -f $(NAME)  # Delete the final binary
+	$(MAKE) -C $(LIBFT_DIR) fclean  # Clean libft (including its library)
+	$(MAKE) -C $(GNL_DIR) fclean  # Clean get_next_line (including its library)
 
 # Rebuild everything
 re: fclean all
@@ -63,4 +65,3 @@ $(GNL_LIB):
 	$(MAKE) -C $(GNL_DIR)
 
 .PHONY: all clean fclean re
-

@@ -66,13 +66,13 @@ void	*mlx_new_image(void *mlx_ptr,int width,int height);
 **  obsolete : image2 data is stored using bit planes
 **  void	*mlx_new_image2(void *mlx_ptr,int width,int height);
 */
-char	*mlx_get_data_addr(void *img_ptr, int *bits_per_pixel,
+char	*mlx_get_data_addr(void *textures_ptr, int *bits_per_pixel,
 			   int *size_line, int *endian);
 /*
 **  endian : 0 = sever X is little endian, 1 = big endian
 **  for mlx_new_image2, 2nd arg of mlx_get_data_addr is number_of_planes
 */
-int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
+int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *textures_ptr,
 				int x, int y);
 int	mlx_get_color_value(void *mlx_ptr, int color);
 
@@ -113,7 +113,7 @@ void	*mlx_xpm_file_to_image(void *mlx_ptr, char *filename,
 			       int *width, int *height);
 int	mlx_destroy_window(void *mlx_ptr, void *win_ptr);
 
-int	mlx_destroy_image(void *mlx_ptr, void *img_ptr);
+int	mlx_destroy_image(void *mlx_ptr, void *textures_ptr);
 
 int	mlx_destroy_display(void *mlx_ptr);
 

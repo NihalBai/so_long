@@ -16,7 +16,7 @@ MiniLibX - Manipulating images
 .fi
 .B mlx_get_data_addr
 (
-.I void *img_ptr, int *bits_per_pixel, int *size_line, int *endian
+.I void *textures_ptr, int *bits_per_pixel, int *size_line, int *endian
 );
 
 .nf
@@ -24,7 +24,7 @@ MiniLibX - Manipulating images
 .fi
 .B mlx_put_image_to_window
 (
-.I void *mlx_ptr, void *win_ptr, void *img_ptr, int x, int y
+.I void *mlx_ptr, void *win_ptr, void *textures_ptr, int x, int y
 );
 
 .nf
@@ -56,7 +56,7 @@ MiniLibX - Manipulating images
 .fi
 .B mlx_destroy_image
 (
-.I void *mlx_ptr, void *img_ptr
+.I void *mlx_ptr, void *textures_ptr
 );
 
 
@@ -86,7 +86,7 @@ display, the window to use, and the image (respectively
 ,
 .I win_ptr
 and
-.I img_ptr
+.I textures_ptr
 ). The (
 .I x
 ,
@@ -96,7 +96,7 @@ and
 .B mlx_get_data_addr
 () returns information about the created image, allowing a user
 to modify it later. The
-.I img_ptr
+.I textures_ptr
 parameter specifies the image to use. The three next parameters should
 be the addresses of three different valid integers.
 .I bits_per_pixel
@@ -130,7 +130,7 @@ pixels of the image that way.
 
 .B mlx_destroy_image
 destroys the given image (
-.I img_ptr
+.I textures_ptr
 ).
 
 .SH STORING COLOR INSIDE IMAGES
