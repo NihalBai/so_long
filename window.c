@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:56:32 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/07 17:17:52 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 02:01:21 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,26 @@ static int	initialize_window(t_data *data)
 	return (0);
 }
 
-static void	setup_game(t_data *data)
+// static void	setup_game(t_data *data)
+// {
+// 	initialize_images(data);
+// 	load_player_textures(data);
+// 	load_enemy_textures(data);
+// 	initialize_player(data, data->map_data);
+// 	initialize_enemy(data, data->map_data);
+// 	mlx_hook(data->win, 2, 1L << 0, handle_keypress, data);
+// 	mlx_hook(data->win, 17, 1L << 5, close_handler, data);
+// }
+static void setup_game(t_data *data)
 {
-	initialize_images(data);
-	load_player_textures(data);
-	load_enemy_textures(data);
-	initialize_player(data, data->map_data);
-	initialize_enemy(data, data->map_data);
-	mlx_hook(data->win, 2, 1L << 0, handle_keypress, data);
-	mlx_hook(data->win, 17, 1L << 5, close_handler, data);
+    initialize_images(data);
+    load_player_textures(data);
+    load_enemy_textures(data);
+    initialize_player(data, data->map_data);
+    initialize_enemy(data, data->map_data);
+    mlx_hook(data->win, 2, 1L << 0, handle_keypress, data);
+    mlx_hook(data->win, 17, 1L << 5, close_handler, data);
+   mlx_loop_hook(data->mlx, (int (*)(void *))game_loop, data);
 }
 
 int	main(int ac, char **av)

@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:00:59 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/07 17:08:08 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 00:21:41 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	initialize_player(t_data *data, char **map)
 	int	x;
 
 	y = 0;
+	data->collectibles_left = count_collections(map);
 	while (map[y])
 	{
 		x = 0;
@@ -96,10 +97,3 @@ void	*choose_textures(t_data *data, char tile)
 	return (NULL);
 }
 
-// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-// {
-// 	char	*dst;
-
-// 	dst = data->addr + (y * data->line_length + x * (data->bpp / 8));
-// 	*(unsigned int *)dst = color;
-// }

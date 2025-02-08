@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:24:33 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/07 17:17:11 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 02:01:09 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_data
 	void *collect_textures; // Collectible texture
 	void *exit_textures;    // Exit texture
 
-	int			collectibles_left;
+	size_t		collectibles_left;
 	t_player	player;
 	t_map		map;
 	t_enemy		enemy;
@@ -105,7 +105,7 @@ void			draw_map(t_data *data, char **map);
 char			**read_map(const char *file);
 
 // enemy
-void			game_loop(t_data *game);
+int game_loop(void *param);
 void			initialize_enemy(t_data *data, char **map);
 void			move_enemy(t_data *data);
 void			load_enemy_textures(t_data *game);
@@ -119,5 +119,6 @@ int				close_handler(t_data *vars);
 
 // collections
 void			check_collectibles_and_exit(t_data *game);
+size_t			count_collections(char **map);
 
 #endif
