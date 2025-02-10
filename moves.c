@@ -6,13 +6,11 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:20:35 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/07 17:01:35 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 01:05:32 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-
 
 void	render_player(t_data *game)
 {
@@ -66,8 +64,7 @@ void	check_game_status(t_data *game, int player_moved)
 	if (game->player.x == game->enemy.x && game->player.y == game->enemy.y)
 	{
 		ft_putstr_fd("Game Over! Enemy caught you!\n", 1);
-		mlx_destroy_window(game->mlx, game->win);
-		exit(0);
+		close_handler(game);
 	}
 }
 
@@ -75,10 +72,10 @@ int	handle_keypress(int keycode, t_data *game)
 {
 	static int	player_moved = 0;
 
-	if (keycode == 65307) // Escape key
+	if (keycode == 65307)
 	{
-		mlx_destroy_window(game->mlx, game->win);
-		exit(0);
+		close_handler(game);
+		return (0);
 	}
 	else
 		process_movement(keycode, game, &player_moved);
@@ -89,29 +86,4 @@ int	handle_keypress(int keycode, t_data *game)
 	mlx_clear_window(game->mlx, game->win);
 	draw_map(game, game->map_data);
 	return (0);
-}
-void	load_player_textures(t_data *game)
-{
-	game->player.textures[0][0] = mlx_xpm_file_to_image(game->mlx,
-			"textures/bunny.xpm", &game->textures_width,
-			&game->textures_height);
-	game->player.textures[0][1] = mlx_xpm_file_to_image(game->mlx,
-			"textures/bunny1.xpm", &game->textures_width,
-			&game->textures_height);
-	game->player.textures[1][0] = mlx_xpm_file_to_image(game->mlx,
-			"textures/right.xpm", &game->textures_width,
-			&game->textures_height);
-	game->player.textures[1][1] = mlx_xpm_file_to_image(game->mlx,
-			"textures/right1.xpm", &game->textures_width,
-			&game->textures_height);
-	game->player.textures[2][0] = mlx_xpm_file_to_image(game->mlx,
-			"textures/left.xpm", &game->textures_width, &game->textures_height);
-	game->player.textures[2][1] = mlx_xpm_file_to_image(game->mlx,
-			"textures/left1.xpm", &game->textures_width,
-			&game->textures_height);
-	game->player.textures[3][0] = mlx_xpm_file_to_image(game->mlx,
-			"textures/back.xpm", &game->textures_width, &game->textures_height);
-	game->player.textures[3][1] = mlx_xpm_file_to_image(game->mlx,
-			"textures/back1.xpm", &game->textures_width,
-			&game->textures_height);
 }

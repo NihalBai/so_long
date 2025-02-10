@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:00:59 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/08 00:21:41 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 01:04:44 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ void	initialize_images(t_data *data)
 		|| !data->exit_textures)
 	{
 		ft_putstr_fd("Error: Failed to load one or more XPM images.\n", 2);
-		exit(EXIT_FAILURE);
+		close_handler(data);
 	}
-	load_player_textures(data);
 }
 
 void	initialize_player(t_data *data, char **map)
@@ -97,3 +96,28 @@ void	*choose_textures(t_data *data, char tile)
 	return (NULL);
 }
 
+void	load_player_textures(t_data *game)
+{
+	game->player.textures[0][0] = mlx_xpm_file_to_image(game->mlx,
+			"textures/bunny.xpm", &game->textures_width,
+			&game->textures_height);
+	game->player.textures[0][1] = mlx_xpm_file_to_image(game->mlx,
+			"textures/bunny1.xpm", &game->textures_width,
+			&game->textures_height);
+	game->player.textures[1][0] = mlx_xpm_file_to_image(game->mlx,
+			"textures/right.xpm", &game->textures_width,
+			&game->textures_height);
+	game->player.textures[1][1] = mlx_xpm_file_to_image(game->mlx,
+			"textures/right1.xpm", &game->textures_width,
+			&game->textures_height);
+	game->player.textures[2][0] = mlx_xpm_file_to_image(game->mlx,
+			"textures/left.xpm", &game->textures_width, &game->textures_height);
+	game->player.textures[2][1] = mlx_xpm_file_to_image(game->mlx,
+			"textures/left1.xpm", &game->textures_width,
+			&game->textures_height);
+	game->player.textures[3][0] = mlx_xpm_file_to_image(game->mlx,
+			"textures/back.xpm", &game->textures_width, &game->textures_height);
+	game->player.textures[3][1] = mlx_xpm_file_to_image(game->mlx,
+			"textures/back1.xpm", &game->textures_width,
+			&game->textures_height);
+}

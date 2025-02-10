@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:14:58 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/07 16:57:32 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 01:18:09 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,21 @@ void	free_map(char **map)
 	free(map);
 }
 
-int	close_handler(t_data *vars)
+int	close_handler(t_data *data)
 {
-	ft_putstr_fd("Window closed via close button.\n", 1);
-	mlx_destroy_window(vars->mlx, vars->win);
+	if (win)
+		mlx_string_put(data->mlx, data->win, 50, 50, 0x00FF00, "You Win!");
+	else
+		mlx_string_put(data->mlx, data->win, 50, 50, 0xFF0000, "Game Over!");
+	cleanup_textures(data);
+	if (data->win)
+		mlx_destroy_window(data->mlx, data->win);
+	if (data->mlx)
+	{
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
+	free_map(data->map_data);
 	exit(0);
+	return (0);
 }

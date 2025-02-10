@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:14:54 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/07 17:15:27 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 01:06:20 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	count_rows(int fd)
 	return (row_count);
 }
 
- char	**fill_map(int fd, size_t row_count)
+char	**fill_map(int fd, size_t row_count)
 {
 	char	**map;
 	char	*line;

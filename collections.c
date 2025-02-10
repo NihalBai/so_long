@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:19:34 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/08 00:23:57 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 23:09:11 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	check_collectibles_and_exit(t_data *game)
 		if (game->collectibles_left == 0)
 		{
 			ft_putstr_fd("You win!\n", 1);
-			mlx_destroy_window(game->mlx, game->win);
-			exit(0);
+			close_handler(game);
 		}
 	}
 }

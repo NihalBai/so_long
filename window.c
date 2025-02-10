@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:56:32 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/08 02:01:21 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 00:54:58 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	prepare_map(t_data *data, char **av)
 	count_map_width_height(map, &data->map);
 	if (!validate_map(map) || !check_map_validity(map))
 	{
-		free_map(map);
+		close_handler(data);
 		return (1);
 	}
 	return (0);
@@ -52,31 +52,22 @@ static int	initialize_window(t_data *data)
 	{
 		free_map(data->map_data);
 		ft_putstr_fd("Error: Failed to create window\n", 2);
+		free(data->mlx);
 		return (1);
 	}
 	return (0);
 }
 
-// static void	setup_game(t_data *data)
-// {
-// 	initialize_images(data);
-// 	load_player_textures(data);
-// 	load_enemy_textures(data);
-// 	initialize_player(data, data->map_data);
-// 	initialize_enemy(data, data->map_data);
-// 	mlx_hook(data->win, 2, 1L << 0, handle_keypress, data);
-// 	mlx_hook(data->win, 17, 1L << 5, close_handler, data);
-// }
-static void setup_game(t_data *data)
+static void	setup_game(t_data *data)
 {
-    initialize_images(data);
-    load_player_textures(data);
-    load_enemy_textures(data);
-    initialize_player(data, data->map_data);
-    initialize_enemy(data, data->map_data);
-    mlx_hook(data->win, 2, 1L << 0, handle_keypress, data);
-    mlx_hook(data->win, 17, 1L << 5, close_handler, data);
-   mlx_loop_hook(data->mlx, (int (*)(void *))game_loop, data);
+	initialize_images(data);
+	load_player_textures(data);
+	load_enemy_textures(data);
+	initialize_player(data, data->map_data);
+	initialize_enemy(data, data->map_data);
+	mlx_hook(data->win, 2, 1L << 0, handle_keypress, data);
+	mlx_hook(data->win, 17, 1L << 5, close_handler, data);
+	mlx_loop_hook(data->mlx, (int (*)(void *))game_loop, data);
 }
 
 int	main(int ac, char **av)
@@ -95,6 +86,9 @@ int	main(int ac, char **av)
 	draw_map(&data, data.map_data);
 	mlx_loop(data.mlx);
 	cleanup_textures(&data);
+	mlx_destroy_window(data.mlx, data.win);
+	mlx_destroy_display(data.mlx);
+	free(data.mlx);
 	free_map(data.map_data);
 	return (0);
 }

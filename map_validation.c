@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:18:26 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/07 14:11:05 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 01:03:12 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,38 @@
 
 int	validate_map(char **map)
 {
-	int i = 0, j;
-	int p_count = 0, e_count = 0, c_count = 0;
+	int	i;
+	int	j;
+	int	p;
+	int	e;
+	int	c;
 
-	while (map[i])
+	i = -1;
+	p = 0;
+	e = 0;
+	c = 0;
+	while (map[++i])
 	{
-		j = 0;
-		while (map[i][j])
+		if ((int)ft_strlen(map[i]) != (int)ft_strlen(map[0]))
+			return (ft_putstr_fd("Error: Map must be rectangular.\n", 2), 0);
+		j = -1;
+		while (map[i][++j])
 		{
-			if (map[i][j] == 'P')
-				p_count++;
-			else if (map[i][j] == 'E')
-				e_count++;
-			else if (map[i][j] == 'C')
-				c_count++;
-			j++;
+			p += (map[i][j] == 'P');
+			e += (map[i][j] == 'E');
+			c += (map[i][j] == 'C');
 		}
-		i++;
 	}
-	if (p_count != 1 || e_count != 1 || c_count < 1)
-	{
-		ft_putstr_fd("Error: Invalid map! Ensure 1 player (P), 1 exit (E), and at least 1 collectible (C)\n", 2);
-		return (0);
-	}
+	if (p != 1 || e != 1 || c < 1)
+		return (ft_putstr_fd("Error: Invalid map! Must have 1P, 1E, ≥1C\n", 2), 0);
 	return (1);
 }
-
 
 void	flood_fill(char **map, int x, int y, int *visited)
 {
 	if (x < 0 || y < 0 || !map[y] || map[y][x] == '1' || visited[y * 100 + x])
 		return ;
 	visited[y * 100 + x] = 1;
-	// Recursively visit neighboring cells
 	flood_fill(map, x + 1, y, visited); // Right
 	flood_fill(map, x - 1, y, visited); // Left
 	flood_fill(map, x, y + 1, visited); // Down
