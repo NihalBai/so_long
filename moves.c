@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:20:35 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/10 01:05:32 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:06:29 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,16 @@ void	check_game_status(t_data *game, int player_moved)
 	if (player_moved > 0 && player_moved % 10 == 0)
 		move_enemy(game);
 	if (game->player.x == game->enemy.x && game->player.y == game->enemy.y)
-	{
-		ft_putstr_fd("Game Over! Enemy caught you!\n", 1);
-		close_handler(game);
-	}
+    {
+        game->game_lost = 1;  // Set lost state
+         game->map_data[game->player.y][game->player.x] = 'L';  // Change tile to lose state
+         mlx_clear_window(game->mlx, game->win);
+		draw_map(game, game->map_data);  // Draw the lose state map
+        mlx_do_sync(game->mlx);  // Make sure it's displayed
+        ft_putstr_fd("Game Over! Enemy caught you!\n", 1);
+        usleep(2000000);  // 2 second pause
+        close_handler(game);
+    }
 }
 
 int	handle_keypress(int keycode, t_data *game)

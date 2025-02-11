@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:24:33 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/10 01:05:19 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 02:01:21 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,16 @@ typedef struct s_data
 	void *floor_textures;   // Floor texture
 	void *collect_textures; // Collectible texture
 	void *exit_textures;    // Exit texture
-
+	void *win_texture; 
+	void *lose_texture; 
+	
 	size_t		collectibles_left;
 	t_player	player;
 	t_map		map;
 	t_enemy		enemy;
+	
+	int     game_won;
+	int     game_lost;
 }				t_data;
 
 // initialization
@@ -115,9 +120,10 @@ int				ft_rand(void);
 void			ft_srand(unsigned int new_seed);
 void			free_map(char **map);
 int				close_handler(t_data *vars);
-
+// void win_lose(t_data *data,int win);
 // collections
 void			check_collectibles_and_exit(t_data *game);
 size_t			count_collections(char **map);
+void	print_map(t_data *game);
 
 #endif

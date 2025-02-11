@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:03:40 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/10 00:50:11 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:55:17 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ void	destroy_single_textures(t_data *data)
 		mlx_destroy_image(data->mlx, data->collect_textures);
 	if (data->exit_textures)
 		mlx_destroy_image(data->mlx, data->exit_textures);
+	if (data->win_texture)
+		mlx_destroy_image(data->mlx, data->win_texture);
+	if (data->lose_texture)
+		mlx_destroy_image(data->mlx, data->lose_texture);
 }
 
 void	draw_entities(t_data *data)
@@ -68,11 +72,11 @@ void	draw_entities(t_data *data)
 	void	*enemy_tex;
 
 	player_tex = data->player.textures[data->player.direction][data->player.current_frame];
-	if (player_tex)
+	if (player_tex && !data->game_won)
 		mlx_put_image_to_window(data->mlx, data->win, player_tex, data->player.x
 			* 32, data->player.y * 32);
 	enemy_tex = data->enemy.textures_enemy[data->enemy.current_frame_enemy];
-	if (enemy_tex)
+	 if (enemy_tex && !data->game_lost) 
 		mlx_put_image_to_window(data->mlx, data->win, enemy_tex, data->enemy.x
 			* 32, data->enemy.y * 32);
 }

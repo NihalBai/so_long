@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:14:58 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/10 01:18:09 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 23:37:05 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ void	free_map(char **map)
 
 int	close_handler(t_data *data)
 {
-	if (win)
-		mlx_string_put(data->mlx, data->win, 50, 50, 0x00FF00, "You Win!");
-	else
-		mlx_string_put(data->mlx, data->win, 50, 50, 0xFF0000, "Game Over!");
 	cleanup_textures(data);
 	if (data->win)
 		mlx_destroy_window(data->mlx, data->win);
@@ -64,3 +60,24 @@ int	close_handler(t_data *data)
 	exit(0);
 	return (0);
 }
+// void	win_lose(t_data *data, int win)
+// {
+// 	int	color;
+// 	int	x;
+// 	int	y;
+
+// 	color = win ? 0x00FF00 : 0xFF0000; // Green for Win, Red for Lose
+// 	x = (data->map.w * 32) / 2 - 50;   // Center horizontally
+// 	y = (data->map.h * 32) / 2 - 20;   // Center vertically
+
+// 	mlx_string_put(data->mlx, data->win, x, y, color, win ? "YOU WIN!" : "GAME OVER!");
+// 	mlx_do_sync(data->mlx); // Ensure the text is updated on screen
+// 	sleep(5); // Display for 2 seconds
+// }
+
+
+
+
+
+
+

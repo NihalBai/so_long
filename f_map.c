@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:14:54 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/10 01:06:20 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:05:11 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	draw_map(t_data *data, char **map)
 		}
 		y++;
 	}
-	draw_entities(data);
+	if (!data->game_lost)  
+		draw_entities(data);
 }
 
 int	count_rows(int fd)
