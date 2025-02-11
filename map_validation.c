@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:18:26 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/10 01:03:12 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:22:45 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	validate_map(char **map)
 		}
 	}
 	if (p != 1 || e != 1 || c < 1)
-		return (ft_putstr_fd("Error: Invalid map! Must have 1P, 1E, ≥1C\n", 2), 0);
+		return (ft_putstr_fd("Error: Invalid map! Must have 1P,1E,≥1C\n", 2), 0);
 	return (1);
 }
 
@@ -46,10 +46,10 @@ void	flood_fill(char **map, int x, int y, int *visited)
 	if (x < 0 || y < 0 || !map[y] || map[y][x] == '1' || visited[y * 100 + x])
 		return ;
 	visited[y * 100 + x] = 1;
-	flood_fill(map, x + 1, y, visited); // Right
-	flood_fill(map, x - 1, y, visited); // Left
-	flood_fill(map, x, y + 1, visited); // Down
-	flood_fill(map, x, y - 1, visited); // Up
+	flood_fill(map, x + 1, y, visited);
+	flood_fill(map, x - 1, y, visited);
+	flood_fill(map, x, y + 1, visited);
+	flood_fill(map, x, y - 1, visited);
 }
 
 int	find_player(char **map, int *start_x, int *start_y)

@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:00:59 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/11 14:54:21 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:23:18 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,8 @@ void	initialize_images(t_data *data)
 			&data->textures_width, &data->textures_height);
 	data->lose_texture = mlx_xpm_file_to_image(data->mlx, "textures/lose.xpm",
 			&data->textures_width, &data->textures_height);
-	if(data->lose_texture)
-	{
-		printf("lose img good\n");
-	}
 	if (!data->wall_textures || !data->floor_textures || !data->collect_textures
-		|| !data->exit_textures || !data->win_texture )
+		|| !data->exit_textures || !data->win_texture)
 	{
 		ft_putstr_fd("Error: Failed to load one or more XPM images.\n", 2);
 		close_handler(data);
@@ -89,12 +85,8 @@ void	initialize_player(t_data *data, char **map)
 
 void	*choose_textures(t_data *data, char tile)
 {
-	 if (tile == 'L' && data->lose_texture)
-    {
-        // Add debug print to verify lose texture is being selected
-        ft_putstr_fd("Rendering lose texture\n", 1);
-        return (data->lose_texture);
-    }
+	if (tile == 'L' && data->lose_texture)
+		return (data->lose_texture);
 	if (tile == 'W')
 		return (data->win_texture);
 	if (tile == '1')
@@ -109,7 +101,6 @@ void	*choose_textures(t_data *data, char tile)
 		return (data->exit_textures);
 	if (tile == 'M')
 		return (data->floor_textures);
-	
 	return (NULL);
 }
 

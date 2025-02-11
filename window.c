@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:56:32 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/11 14:48:41 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:10:01 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	initialize_window(t_data *data)
 static void	setup_game(t_data *data)
 {
 	data->game_won = 0;
-	// data->game_lost = 0; 
+	data->game_lost = 0;
 	initialize_images(data);
 	load_player_textures(data);
 	load_enemy_textures(data);

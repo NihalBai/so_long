@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enemy.c                                            :+:      :+:    :+:   */
+/*   enemy_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:06:47 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/10 01:11:51 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 22:02:55 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ void	fill_empty_spaces(t_data *data, int *x, int *y, int *count)
 		while (j < data->map.w)
 		{
 			if (data->map_data[i][j] == '0')
-				x[*count] = j, y[(*count)++] = i;
+			{
+				x[*count] = j;
+				y[*count] = i;
+				(*count)++;
+			}
 			j++;
 		}
 		i++;
@@ -73,20 +77,23 @@ static void	update_enemy_position(t_data *data, int new_x, int new_y)
 
 void	move_enemy(t_data *data)
 {
-	static int	last_x = -1, last_y = -1;
+	static int	last[2] = {-1, -1};
+	int			*x;
+	int			*y;
+	int			count;
+	int			r;
 
-	int *x, *y, count, r;
 	count = 0;
 	get_empty_spaces(data, &x, &y, &count);
 	if (count > 0)
 	{
 		r = ft_rand() % count;
-		if (x[r] != last_x || y[r] != last_y)
+		if (x[r] != last[0] || y[r] != last[1])
 			update_enemy_position(data, x[r], y[r]);
 		else
 			animate_enemy(data);
-		last_x = data->enemy.x;
-		last_y = data->enemy.y;
+		last[0] = data->enemy.x;
+		last[1] = data->enemy.y;
 	}
 	free(x);
 	free(y);

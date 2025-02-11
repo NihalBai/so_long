@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enemy2.c                                           :+:      :+:    :+:   */
+/*   enemy2_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 01:07:08 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/10 01:11:46 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 21:54:57 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 void	initialize_enemy(t_data *data, char **map)
 {
 	int			attempts;
-	const int	MAX_ATTEMPTS = 100;
+	const int	max = 100;
+	int			x;
+	int			y;
 
-	int x, y;
 	attempts = 0;
 	data->enemy.current_frame_enemy = 0;
-	while (attempts < MAX_ATTEMPTS)
+	while (attempts < max)
 	{
 		y = ft_rand() % data->map.h;
 		x = ft_rand() % data->map.w;
@@ -38,11 +39,16 @@ void	initialize_enemy(t_data *data, char **map)
 
 void	load_enemy_textures(t_data *game)
 {
-	char	*textures[7] = {"textures/1.xpm", "textures/2.xpm",
-			"textures/3.xpm", "textures/4.xpm", "textures/5.xpm",
-			"textures/6.xpm", "textures/7.xpm"};
+	char	*textures[7];
 	int		i;
 
+	textures[0] = "textures/1.xpm";
+	textures[1] = "textures/2.xpm";
+	textures[2] = "textures/3.xpm";
+	textures[3] = "textures/4.xpm";
+	textures[4] = "textures/5.xpm";
+	textures[5] = "textures/6.xpm";
+	textures[6] = "textures/7.xpm";
 	i = 0;
 	while (i < 7)
 	{
@@ -61,21 +67,18 @@ void	animate_enemy(t_data *data)
 	total_frames = 4;
 	data->enemy.current_frame_enemy++;
 	if (data->enemy.current_frame_enemy >= total_frames)
-	{
 		data->enemy.current_frame_enemy = 0;
-	}
 }
 
 int	game_loop(void *param)
 {
-	t_data *data;
-	static int frame_counter = 0;
+	t_data		*data;
+	static int	frame_counter;
 
+	frame_counter = 0;
 	data = (t_data *)param;
 	if (frame_counter++ % 10 == 0)
-	{
 		animate_enemy(data);
-	}
 	draw_entities(data);
 	return (0);
 }

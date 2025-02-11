@@ -2,6 +2,7 @@
     "files.associations": {
         "mlx.h": "c",
         "stdlib.h": "c",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "*.tcc": "c"
     }
 }

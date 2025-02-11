@@ -6,7 +6,7 @@
 #    By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/20 19:10:11 by nbaidaou          #+#    #+#              #
-#    Updated: 2025/02/10 01:13:15 by nbaidaou         ###   ########.fr        #
+#    Updated: 2025/02/11 22:06:15 by nbaidaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ LIBFT_DIR = libft
 GNL_DIR = get_next_line
 
 SRC = window.c map_validation.c moves.c enemy_bonus.c helpers.c collections.c entities.c initialization.c f_map.c enemy2_bonus.c
-# SRC = test.c
 OBJ = $(SRC:.c=.o)
 
 

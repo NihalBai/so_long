@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:14:54 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/11 15:05:11 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:35:27 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void	draw_map(t_data *data, char **map)
 {
 	void	*current_textures;
+	int		x;
+	int		y;
 
-	int(x), (y);
 	y = 0;
 	while (y < data->map.h)
 	{
@@ -31,7 +32,7 @@ void	draw_map(t_data *data, char **map)
 		}
 		y++;
 	}
-	if (!data->game_lost)  
+	if (!data->game_lost)
 		draw_entities(data);
 }
 
@@ -41,8 +42,11 @@ int	count_rows(int fd)
 	char	*line;
 
 	row_count = 0;
-	while ((line = get_next_line(fd)) != NULL)
+	while (1)
 	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
 		row_count++;
 		free(line);
 	}
@@ -60,8 +64,11 @@ char	**fill_map(int fd, size_t row_count)
 	if (!map)
 		return (NULL);
 	i = 0;
-	while ((line = get_next_line(fd)) != NULL)
+	while (1)
 	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
 		trimmed_line = ft_strtrim(line, "\n");
 		map[i++] = ft_strdup(trimmed_line);
 		free(trimmed_line);
