@@ -6,7 +6,7 @@
 #    By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/20 19:10:11 by nbaidaou          #+#    #+#              #
-#    Updated: 2025/02/11 22:06:15 by nbaidaou         ###   ########.fr        #
+#    Updated: 2025/02/12 22:04:29 by nbaidaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I. -Ilibft -Iget_next_line -Iminilibx-linux-master
 LDFLAGS = -Llibft -Lget_next_line -Lminilibx-linux-master
 
-MLX_DIR = minilibx-linux-master
+MLX_DIR = /home/nbaidaou/Documents/minilibx-linux-master
 LIBFT_DIR = libft
 GNL_DIR = get_next_line
 

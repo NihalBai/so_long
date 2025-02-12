@@ -6,14 +6,14 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:24:33 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/11 16:16:39 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/12 22:04:42 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "./minilibx-linux-master/mlx.h"
+# include "/home/nbaidaou/Documents/minilibx-linux-master/mlx.h"
 # include "get_next_line.h"
 # include "libft.h"
 # include <fcntl.h>

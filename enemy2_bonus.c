@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 01:07:08 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/11 21:54:57 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:47:31 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	animate_enemy(t_data *data)
 {
 	int	total_frames;
 
-	total_frames = 4;
+	total_frames = 7;
 	data->enemy.current_frame_enemy++;
 	if (data->enemy.current_frame_enemy >= total_frames)
 		data->enemy.current_frame_enemy = 0;
