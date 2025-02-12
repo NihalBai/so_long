@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:00:59 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/11 16:23:18 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/12 22:59:40 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 void	count_map_width_height(char **map, t_map *map_info)
 {
+	int	first_valid_line;
+	int	last_valid_line;
 	int	i;
 
+	find_map_bounds(map, &first_valid_line, &last_valid_line);
 	map_info->w = 0;
 	map_info->h = 0;
-	i = 0;
-	while (map[i] != NULL)
-	{
-		map_info->h++;
-		i++;
-	}
-	if (map[0] != NULL)
+	if (first_valid_line != -1)
+		map_info->h = last_valid_line - first_valid_line + 1;
+	if (first_valid_line != -1)
 	{
 		i = 0;
-		while (map[0][i] != '\0')
+		while (map[first_valid_line][i] != '\0')
 		{
 			map_info->w++;
 			i++;

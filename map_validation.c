@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:18:26 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/11 16:22:45 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:10:21 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,15 @@
 
 int	validate_map(char **map)
 {
-	int	i;
-	int	j;
-	int	p;
-	int	e;
-	int	c;
+	int				last_valid_line;
+	t_map_counts	counts;
 
-	i = -1;
-	p = 0;
-	e = 0;
-	c = 0;
-	while (map[++i])
-	{
-		if ((int)ft_strlen(map[i]) != (int)ft_strlen(map[0]))
-			return (ft_putstr_fd("Error: Map must be rectangular.\n", 2), 0);
-		j = -1;
-		while (map[i][++j])
-		{
-			p += (map[i][j] == 'P');
-			e += (map[i][j] == 'E');
-			c += (map[i][j] == 'C');
-		}
-	}
-	if (p != 1 || e != 1 || c < 1)
-		return (ft_putstr_fd("Error: Invalid map! Must have 1P,1E,≥1C\n", 2), 0);
+	last_valid_line = find_last_valid_line(map);
+	if (!count_map_elements(map, last_valid_line, &counts))
+		return (0);
+	if (counts.p != 1 || counts.e != 1 || counts.c < 1)
+		return (ft_putstr_fd("Error: Invalid map! Must have 1P,1E,≥1C\n", 2),
+			0);
 	return (1);
 }
 

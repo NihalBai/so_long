@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:24:33 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/12 22:04:42 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:11:09 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ typedef struct s_data
 	int			game_lost;
 }				t_data;
 
+typedef struct s_map_counts
+{
+	int			p;
+	int			e;
+	int			c;
+}				t_map_counts;
+
 /*
 ** INITIALIZATION
 */
@@ -129,7 +136,10 @@ void			ft_srand(unsigned int new_seed);
 void			free_map(char **map);
 int				close_handler(t_data *vars);
 void			win_lose(t_data *data, int win);
-
+int				find_last_valid_line(char **map);
+void			find_map_bounds(char **map, int *first, int *last);
+int				count_map_elements(char **map, int last_valid_line,
+					t_map_counts *counts);
 /*
 ** COLLECTIONS
 */
