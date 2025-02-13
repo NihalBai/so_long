@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   moves.c                                            :+:      :+:    :+:   */
+/*   moves_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:20:35 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/11 16:19:49 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 22:49:02 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ int	handle_keypress(int keycode, t_data *game)
 	check_game_status(game, player_moved);
 	mlx_clear_window(game->mlx, game->win);
 	draw_map(game, game->map_data);
+	counter(game, player_moved);
 	return (0);
 }

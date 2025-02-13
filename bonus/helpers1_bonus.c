@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:05:31 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/12 23:11:22 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 01:29:21 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,29 @@ void	find_map_bounds(char **map, int *first, int *last)
 		}
 		i++;
 	}
+}
+
+void	counter(t_data *data, int c)
+{
+	int		color;
+	int		x;
+	int		y;
+	char	*msg;
+	char	*full_msg;
+
+	color = 0xFAB7BA;
+	msg = ft_itoa(c);
+	if (!msg)
+		return ;
+	full_msg = ft_strjoin("Total moves: ", msg);
+	free(msg);
+	if (!full_msg)
+	{
+		return ;
+	}
+	x = 10;
+	y = 20;
+	mlx_string_put(data->mlx, data->win, x, y, color, full_msg);
+	mlx_do_sync(data->mlx);
+	free(full_msg);
 }
