@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:56:32 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/13 22:40:27 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/15 21:20:50 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	prepare_map(t_data *data, char **av)
 {
 	char	**map;
 
-	map = read_map(av[1]);
+	map = read_map(av[1], data);
 	if (!map)
 	{
 		ft_putstr_fd("Error: Failed to read the map\n", 2);

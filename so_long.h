@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 23:24:33 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/13 01:02:00 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/15 21:18:53 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void			move_player(t_data *data, int new_x, int new_y, int direction);
 ** FILE MAP
 */
 void			draw_map(t_data *data, char **map);
-char			**read_map(const char *file);
+char			**read_map(const char *file, t_data *data);
 
 /*
 ** ENEMY

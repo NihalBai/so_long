@@ -6,7 +6,7 @@
 /*   By: nbaidaou <nbaidaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:14:54 by nbaidaou          #+#    #+#             */
-/*   Updated: 2025/02/11 16:35:27 by nbaidaou         ###   ########.fr       */
+/*   Updated: 2025/02/15 21:24:33 by nbaidaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**fill_map(int fd, size_t row_count)
 	return (map);
 }
 
-char	**read_map(const char *file)
+char	**read_map(const char *file, t_data *data)
 {
 	int		fd;
 	char	**map;
@@ -86,12 +86,20 @@ char	**read_map(const char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (ft_putstr_fd("Error: Could not open map file\n", 2), NULL);
+	{
+		ft_putstr_fd("Error: Could not open map file\n", 2);
+		close_handler(data);
+		return (NULL);
+	}
 	row_count = count_rows(fd);
 	close(fd);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (ft_putstr_fd("Error: Could not reopen map file\n", 2), NULL);
+	{
+		ft_putstr_fd("Error: Could not reopen map file\n", 2);
+		close_handler(data);
+		return (NULL);
+	}
 	map = fill_map(fd, row_count);
 	close(fd);
 	return (map);
