@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -I. -Ilibft -Iget_next_line -Iminilibx-linux-master
 LDFLAGS = -Llibft -Lget_next_line -Lminilibx-linux-master
 
