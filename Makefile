@@ -12,7 +12,6 @@
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I. -Ilibft -Iget_next_line -Iminilibx-linux-master
-LDFLAGS = -Llibft -Lget_next_line -Lminilibx-linux-master
 
 MLX_DIR = /home/nbaidaou/Documents/minilibx-linux-master
 LIBFT_DIR = libft
